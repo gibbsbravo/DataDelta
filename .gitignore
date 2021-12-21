@@ -137,3 +137,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Do not track datadelta_html_report if generated accidentally 
+src/datadelta/datadelta_html_report.html

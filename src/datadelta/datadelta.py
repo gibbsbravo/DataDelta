@@ -468,7 +468,7 @@ def export_html_report(consolidated_report, record_changes_comparison_df,
         Boolean: Saves an html file to current working directory with the summary report and returns True, 
             returns False when file exists in directory and overwrite existing is False 
     """
-    max_detail_values = 20
+    max_detail_values = 50
 
     header_lookup_table = {"added_columns": "Sample Added Columns",
                            "removed_columns": "Sample Removed Columns",
@@ -494,8 +494,181 @@ def export_html_report(consolidated_report, record_changes_comparison_df,
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
                 <!-- Custom CSS -->
-                <link href="./data/style.css" rel="stylesheet" type="text/css"/>
                 <link href='http://fonts.googleapis.com/css?family=Roboto|Lato|Lora' rel='stylesheet' type='text/css'>
+                
+                <style>
+                    .mainTitle {
+                    padding-top: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-weight: bold;
+                    font-family: "Roboto", sans-serif;
+                    }
+
+                    .descriptionText {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-family: "Lora";
+                    font-style: italic;
+                    font-size: medium;
+                    }
+
+                    .reportDate {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-family: "Lora";
+                    font-style: italic;
+                    }
+
+                    .sectionTitle {
+                    font-weight: bold;
+                    font-family: "Roboto", sans-serif;
+                    }
+
+                    .detailTitle {
+                    font-size: 20;
+                    font-style: italic;
+                    font-family: "Roboto", sans-serif;
+                    }
+
+                    .DataFrameSummaryContainer {
+                    margin: 10px 50px 0px 50px;
+                    display: grid;
+                    grid-template-columns: repeat(10, 1fr);
+                    }
+
+                    .dataFrameText {
+                    font-family: "Lora";
+                    }
+
+                    #oldDataFrameSummaryContainer {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 1 / 6;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    #newDataFrameSummaryContainer {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 6 / -1;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .center {
+                    display: flex;
+                    justify-content: center;
+                    }
+
+                    .contentFormat {
+                    font-family: "Lora";
+                    }
+
+                    .summaryDataframeTable {
+                    margin: 10px;
+                    overflow: auto;
+                    padding: 15px 5px 0px 5px;
+                    font-family: "Lora";
+                    }
+
+                    .tableChangesContainer {
+                    margin: 10px 50px 0px 50px;
+                    display: grid;
+                    grid-template-columns: repeat(9, 1fr);
+                    }
+
+                    .columnChanges {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 1 / 4;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .recordCountChanges {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 4 / 7;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .dataTypeChanges {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 7 / -1;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .list-group-item::before {
+                    content: "●";
+                    margin-right: 0.75rem;
+                    }
+
+                    .recordValueChangesContainer {
+                    margin: 10px 50px 0px 50px;
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    }
+
+                    .recordValueChanges {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 1 / 1;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .recordValueChangesTableContainer {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 2 / 2;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .changedRecordsDataframe {
+                    overflow: auto;
+                    padding: 15px 5px 0px 5px;
+                    overflow: auto;
+                    font-family: "Lora";
+                    }
+                </style>
+                
             </head>
             <body>
                 <h1 class="mainTitle">{{consolidated_report['meta']['title_text']}}</h1>
@@ -513,8 +686,8 @@ def export_html_report(consolidated_report, record_changes_comparison_df,
                         <span class="center dataFrameText">Primary Key: {{consolidated_report['old_df_table_summary']['primary_key']}} | 
                             Primary Key Is Unique: {{consolidated_report['old_df_table_summary']['is_primary_key_unique']}}</span>
                         <div class="summaryDataframeTable">
-                        {{consolidated_report['old_df_table_summary']['summary_table'].to_html(
-                            classes="table table-striped table-bordered table-hover text-center")}}
+                            {{consolidated_report['old_df_table_summary']['summary_table'].to_html(
+                                classes="table table-striped table-bordered table-hover text-center")}}
                         </div>
                     </div>
 
@@ -525,8 +698,8 @@ def export_html_report(consolidated_report, record_changes_comparison_df,
                         <span class="center dataFrameText">Primary Key: {{consolidated_report['new_df_table_summary']['primary_key']}} | 
                             Primary Key Is Unique: {{consolidated_report['new_df_table_summary']['is_primary_key_unique']}}</span>
                         <div class="summaryDataframeTable">
-                        {{consolidated_report['new_df_table_summary']['summary_table'].to_html(
-                            classes="table table-striped table-bordered table-hover text-center")}}
+                            {{consolidated_report['new_df_table_summary']['summary_table'].to_html(
+                                classes="table table-striped table-bordered table-hover text-center")}}
                         </div>
                     </div>                
                 </div>
@@ -655,24 +828,25 @@ def export_html_report(consolidated_report, record_changes_comparison_df,
         </html>
         ''')
 
-    with open(export_file_name, 'w') as f:
-        if ".html" not in export_file_name:
-            export_file_name = export_file_name + ".html"
+    if os.path.isfile(export_file_name) & (overwrite_existing_file is False):
+        print("File already exists in current directory")
+        return False
 
-        if os.path.isfile(export_file_name) & (overwrite_existing_file is False):
-            print("File already exists in current directory")
-            return False
+    else:
+        with open(export_file_name, 'w', encoding='utf-8') as f:
+            if ".html" not in export_file_name:
+                export_file_name = export_file_name + ".html"
 
-        else:
-            f.write(html_template.render(
-                consolidated_report=consolidated_report,
-                record_changes_comparison_df=record_changes_comparison_df,
-                header_lookup_table=header_lookup_table,
-                max_detail_values=max_detail_values))
+            else:
+                f.write(html_template.render(
+                    consolidated_report=consolidated_report,
+                    record_changes_comparison_df=record_changes_comparison_df,
+                    header_lookup_table=header_lookup_table,
+                    max_detail_values=max_detail_values))
 
-            print("{} saved successfully.".format(export_file_name))
+                print("{} saved successfully.".format(export_file_name))
 
-            return True
+                return True
 
 
 def save_pickle(input_dict, export_file_name, overwrite_existing_file=False):
@@ -717,9 +891,9 @@ def load_pickle(import_file_name):
     return loaded_dict
 
 
-if __name__ == '__main__':
+def get_example_report():
     old_df = pd.read_csv('data/MainTestData_old_df.csv')
-    new_df = pd.read_csv('data/MainTestData_new_df.csv')
+    new_df = pd.read_csv('data/EqualDataFrames_new_df.csv')
     primary_key = 'A'
     column_subset = None
     consolidated_report, record_changes_comparison_df = create_consolidated_report(

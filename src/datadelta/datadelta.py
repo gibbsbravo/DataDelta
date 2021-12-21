@@ -130,7 +130,7 @@ def check_record_count(old_df, new_df, primary_key):
         primary_key (string): The primary key for each dataframe (must be the same primary key)
 
     Returns:
-        report (dict): Summary report showing the record count changes and composition
+        report (dict): Summary report showing the record count changes and their composition
     """
 
     # Save copy of dataframes to avoid modifying the original dataframes
@@ -893,7 +893,7 @@ def load_pickle(import_file_name):
 
 def get_example_report():
     old_df = pd.read_csv('data/MainTestData_old_df.csv')
-    new_df = pd.read_csv('data/EqualDataFrames_new_df.csv')
+    new_df = pd.read_csv('data/MainTestData_new_df.csv')
     primary_key = 'A'
     column_subset = None
     consolidated_report, record_changes_comparison_df = create_consolidated_report(

@@ -1,1 +1,1 @@
-from src.datadelta.datadelta import *
+from .datadelta import *

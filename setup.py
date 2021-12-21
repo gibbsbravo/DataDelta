@@ -1,15 +1,17 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name='datadelta',
     version='0.0.1',
+    author="Andrew Gibbs-Bravo",
+    author_email="andrewgbravo@gmail.com",
     description='The best Python package for comparing two dataframes',
-    packages=['datadelta'],
-    package_dir={'datadelta': 'src/datadelta'},
-    package_data={'datadelta': ['data/*']},
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
@@ -31,6 +33,5 @@ setup(
         ],
     },
     url="https://github.com/gibbsbravo/DataDelta",
-    author="Andrew Gibbs-Bravo",
-    author_email="andrewgbravo@gmail.com",
+    
 )

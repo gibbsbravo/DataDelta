@@ -1,0 +1,9 @@
+include *.py
+recursive-include docs *.bat
+recursive-include docs *.py
+recursive-include docs *.rst
+recursive-include docs Makefile
+recursive-include images *.png
+recursive-include src *.csv
+recursive-include src *.html
+recursive-include src *.pickle

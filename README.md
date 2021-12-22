@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/gibbsbravo/DataDelta">
-    <img src="images/DataDeltaLogo.png" alt="Logo" width="200" height="200">
+    <img src="https://github.com/gibbsbravo/DataDelta/blob/master/images/DataDeltaLogo.png?raw=true" alt="Logo" width="200" height="200">
   </a>
   <p align="center" style="font-weight: bold; font-style:italic">
     The best Python package for comparing two dataframes
@@ -201,4 +201,4 @@ Project Link: [https://github.com/gibbsbravo/DataDelta](https://github.com/gibbs
 [license-shield]: https://img.shields.io/github/license/gibbsbravo/DataDelta.svg?style=for-the-badge
 [license-url]: https://github.com/gibbsbravo/DataDelta/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[report-screenshot]: images/DatasetComparisonReport.png
+[report-screenshot]: https://github.com/gibbsbravo/DataDelta/blob/master/images/DatasetComparisonReport.png?raw=true

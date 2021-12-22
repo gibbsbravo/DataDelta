@@ -898,10 +898,10 @@ def get_example_report():
     column_subset = None
     consolidated_report, record_changes_comparison_df = create_consolidated_report(
         old_df, new_df, primary_key, column_subset)
-    save_pickle(consolidated_report, 'data/correct_column_subset_report.pickle',
-                overwrite_existing_file=False)
+    save_pickle(consolidated_report, 'data/correct_consolidated_report.pickle',
+                overwrite_existing_file=True)
     export_html_report(consolidated_report, record_changes_comparison_df,
-                       export_file_name='datadelta_html_report.html',
+                       export_file_name='data/datadelta_html_report.html',
                        overwrite_existing_file=True)
 
 # %%

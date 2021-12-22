@@ -14,16 +14,15 @@ setup(
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: >3.7",
         "License :: OSI Approved :: GNU General Public License v3 (GPLV3)",
         "Operating System :: OS Independent",
     ],
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=[
+        "pandas">=1.0.0,
         "numpy",
-        "pandas",
         "jinja2",
     ],
     keywords=['python', 'dataops', 'devops', 'data', 'data analysis'],

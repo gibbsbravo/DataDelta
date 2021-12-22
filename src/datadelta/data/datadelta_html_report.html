@@ -1,0 +1,1105 @@
+
+        <html>
+            <head>
+                <!-- Required meta tags -->
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+                <!-- Bootstrap CSS -->
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                <!-- Optional JavaScript -->
+                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                <!-- Custom CSS -->
+                <link href='http://fonts.googleapis.com/css?family=Roboto|Lato|Lora' rel='stylesheet' type='text/css'>
+                
+                <style>
+                    .mainTitle {
+                    padding-top: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-weight: bold;
+                    font-family: "Roboto", sans-serif;
+                    }
+
+                    .descriptionText {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-family: "Lora";
+                    font-style: italic;
+                    font-size: medium;
+                    }
+
+                    .reportDate {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-family: "Lora";
+                    font-style: italic;
+                    }
+
+                    .sectionTitle {
+                    font-weight: bold;
+                    font-family: "Roboto", sans-serif;
+                    }
+
+                    .detailTitle {
+                    font-size: 20;
+                    font-style: italic;
+                    font-family: "Roboto", sans-serif;
+                    }
+
+                    .DataFrameSummaryContainer {
+                    margin: 10px 50px 0px 50px;
+                    display: grid;
+                    grid-template-columns: repeat(10, 1fr);
+                    }
+
+                    .dataFrameText {
+                    font-family: "Lora";
+                    }
+
+                    #oldDataFrameSummaryContainer {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 1 / 6;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    #newDataFrameSummaryContainer {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 6 / -1;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .center {
+                    display: flex;
+                    justify-content: center;
+                    }
+
+                    .contentFormat {
+                    font-family: "Lora";
+                    }
+
+                    .summaryDataframeTable {
+                    margin: 10px;
+                    overflow: auto;
+                    padding: 15px 5px 0px 5px;
+                    font-family: "Lora";
+                    }
+
+                    .tableChangesContainer {
+                    margin: 10px 50px 0px 50px;
+                    display: grid;
+                    grid-template-columns: repeat(9, 1fr);
+                    }
+
+                    .columnChanges {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 1 / 4;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .recordCountChanges {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 4 / 7;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .dataTypeChanges {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 7 / -1;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .list-group-item::before {
+                    content: "●";
+                    margin-right: 0.75rem;
+                    }
+
+                    .recordValueChangesContainer {
+                    margin: 10px 50px 0px 50px;
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    }
+
+                    .recordValueChanges {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 1 / 1;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .recordValueChangesTableContainer {
+                    margin: 10px;
+                    padding: 10px;
+                    grid-column: 2 / 2;
+                    grid-row: 1 / 1;
+                    border: 1px solid lightgrey;
+                    background-color: rgb(251, 251, 255);
+                    border-radius: 12px;
+                    overflow: auto;
+                    max-height: 600px;
+                    }
+
+                    .changedRecordsDataframe {
+                    overflow: auto;
+                    padding: 15px 5px 0px 5px;
+                    overflow: auto;
+                    font-family: "Lora";
+                    }
+                </style>
+                
+            </head>
+            <body>
+                <h1 class="mainTitle">DataDelta: Dataset Comparison Report</h1>
+                <span class="descriptionText"> Summary comparison of changes between two tables </span>
+                
+                <span class="reportDate">22-December-2021 (11:04 AM)</span>
+
+                <div class='DataFrameSummaryContainer'>
+                    <div id='oldDataFrameSummaryContainer'>
+                        <h3 class="text-center sectionTitle">Old Dataframe Summary</h3>
+                        <span class="center dataFrameText">Number of Records: 6 | 
+                            Number of Columns: 26</span>
+                        <span class="center dataFrameText">Primary Key: A | 
+                            Primary Key Is Unique: True</span>
+                        <div class="summaryDataframeTable">
+                            <table border="1" class="dataframe table table-striped table-bordered table-hover text-center">
+  <thead>
+    <tr style="text-align: center;">
+      <th></th>
+      <th>column_names</th>
+      <th>n_valid_records</th>
+      <th>prop_valid_records</th>
+      <th>datatype</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>C</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>D</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>object</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>E</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>object</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>F</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>object</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>G</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>I</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>J</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>K</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>L</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>M</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>N</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>O</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>P</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Q</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>R</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>W</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>X</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Y</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Z</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>H</td>
+      <td>2</td>
+      <td>33.3</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>S</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>T</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>U</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>V</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>float64</td>
+    </tr>
+  </tbody>
+</table>
+                        </div>
+                    </div>
+
+                    <div id='newDataFrameSummaryContainer'>
+                        <h3 class="text-center sectionTitle">New Dataframe Summary</h3>
+                        <span class="center dataFrameText">Number of Records: 7 | 
+                            Number of Columns: 26</span>
+                        <span class="center dataFrameText">Primary Key: A | 
+                            Primary Key Is Unique: True</span>
+                        <div class="summaryDataframeTable">
+                            <table border="1" class="dataframe table table-striped table-bordered table-hover text-center">
+  <thead>
+    <tr style="text-align: center;">
+      <th></th>
+      <th>column_names</th>
+      <th>n_valid_records</th>
+      <th>prop_valid_records</th>
+      <th>datatype</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>C</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>D</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>object</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>F</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>object</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>G</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>I</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>object</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>J</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>K</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>L</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>M</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>N</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>O</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>P</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Q</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>R</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>W</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>X</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Y</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Z</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>int64</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>HH</td>
+      <td>6</td>
+      <td>85.7</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>H</td>
+      <td>2</td>
+      <td>28.6</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>S</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>T</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>U</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>V</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>float64</td>
+    </tr>
+  </tbody>
+</table>
+                        </div>
+                    </div>                
+                </div>
+
+                <div class="tableChangesContainer">
+                    <div class="columnChanges">
+                        <h3 class="text-center sectionTitle">Column Changes</h3>
+                        
+                            <ul class="list-group contentFormat">
+                                
+                                    <li class="list-group-item">1 Unique column(s) in the old table</li>
+                                
+                            </ul>
+                            <br>
+
+                            
+                                <h4 class="text-center detailTitle"> Sample Removed Columns </h4>
+                                <div class="alert alert-secondary contentFormat"> ['E'] </div>
+                            
+                        
+                    </div>
+
+                    <div class="recordCountChanges"> 
+                        <h3 class="text-center sectionTitle">Record Count Changes</h3>
+                        
+                            <ul class="list-group contentFormat">
+                                
+                                    <li class="list-group-item">The old table has 6 records</li>
+                                
+                                    <li class="list-group-item">The new table has 7 records</li>
+                                
+                                    <li class="list-group-item">Change in the total number of records: 1</li>
+                                
+                                    <li class="list-group-item">1 record(s) removed</li>
+                                
+                                    <li class="list-group-item">2 record(s) added</li>
+                                
+                            </ul>
+                            <br>
+
+                            
+                                <h4 class="text-center detailTitle"> Sample Removed Records </h4>
+                                <div class="alert alert-secondary contentFormat"> [2] </div>
+                            
+                                <h4 class="text-center detailTitle"> Sample Added Records </h4>
+                                <div class="alert alert-secondary contentFormat"> [6, 7] </div>
+                            
+                        
+                    </div>
+
+                    <div class="dataTypeChanges">
+                        <h3 class="text-center sectionTitle">Datatype Changes</h3>
+                        
+                            <ul class="list-group contentFormat">
+                                
+                                    <li class="list-group-item">1 column(s) have different types (4.0% of shared columns)</li>
+                                
+                            </ul>
+                            <br>
+
+                            <div class="contentFormat">
+                                <h4 class="text-center detailTitle">Summary of Datatype Changes</h4>
+                                <table border="1" class="dataframe table table-striped table-bordered table-hover text-center">
+  <thead>
+    <tr style="text-align: center;">
+      <th>column_name</th>
+      <th>old_df_dtype</th>
+      <th>new_df_dtype</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>I</td>
+      <td>int64</td>
+      <td>object</td>
+    </tr>
+  </tbody>
+</table>
+                            </div>
+                            
+
+                            
+                                <h4 class="text-center detailTitle"> Sample Changed Columns </h4>
+                                <div class="alert alert-secondary"> ['I'] </div>
+                            
+                        
+                    </div>
+                </div>
+
+                <div class="recordValueChangesContainer">
+                    <div class="recordValueChanges">
+                        <h3 class="text-center sectionTitle">Record Value Changes</h3>
+                        
+                            <ul class="list-group contentFormat">
+                                
+                                    <li class="list-group-item">5 records have changed (100.0% of shared records)</li>
+                                
+                            </ul>
+                            <br>
+
+                            
+                                <h4 class="text-center detailTitle">Proportion of Records that have Changed for Each Column </h4>
+                                <div class="contentFormat">
+                                    <table border="1" class="dataframe table table-striped table-bordered table-hover text-center">
+  <thead>
+    <tr style="text-align: center;">
+      <th></th>
+      <th>column_names</th>
+      <th>changed_records_%</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>I</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>F</td>
+      <td>80.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>D</td>
+      <td>60.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>B</td>
+      <td>40.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>C</td>
+      <td>40.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>H</td>
+      <td>40.0</td>
+    </tr>
+  </tbody>
+</table>
+                                </div>
+                            
+
+                            
+                                <h4 class="text-center detailTitle"> Sample Changed Records </h4>
+                                <div class="alert alert-secondary contentFormat"> [1, 3, 4, 5, 8] </div>
+                            
+                                <h4 class="text-center detailTitle"> Sample Changed Columns </h4>
+                                <div class="alert alert-secondary contentFormat"> ['I', 'F', 'D', 'B', 'C', 'H'] </div>
+                            
+                        
+                    </div>
+                    <div class="recordValueChangesTableContainer">
+                        <h3 class="text-center sectionTitle">Comparison of Changed Records</h3>
+                        
+                            <div class="changedRecordsDataframe">
+                                <table border="1" class="dataframe table table-striped table-bordered table-hover text-center">
+  <thead>
+    <tr style="text-align: center;">
+      <th></th>
+      <th>A</th>
+      <th>B_NEW</th>
+      <th>B_OLD</th>
+      <th>C_NEW</th>
+      <th>C_OLD</th>
+      <th>D_NEW</th>
+      <th>D_OLD</th>
+      <th>E_OLD</th>
+      <th>F_NEW</th>
+      <th>F_OLD</th>
+      <th>G_NEW</th>
+      <th>G_OLD</th>
+      <th>HH_NEW</th>
+      <th>H_NEW</th>
+      <th>H_OLD</th>
+      <th>I_NEW</th>
+      <th>I_OLD</th>
+      <th>J_NEW</th>
+      <th>J_OLD</th>
+      <th>K_NEW</th>
+      <th>K_OLD</th>
+      <th>L_NEW</th>
+      <th>L_OLD</th>
+      <th>M_NEW</th>
+      <th>M_OLD</th>
+      <th>N_NEW</th>
+      <th>N_OLD</th>
+      <th>O_NEW</th>
+      <th>O_OLD</th>
+      <th>P_NEW</th>
+      <th>P_OLD</th>
+      <th>Q_NEW</th>
+      <th>Q_OLD</th>
+      <th>R_NEW</th>
+      <th>R_OLD</th>
+      <th>S_NEW</th>
+      <th>S_OLD</th>
+      <th>T_NEW</th>
+      <th>T_OLD</th>
+      <th>U_NEW</th>
+      <th>U_OLD</th>
+      <th>V_NEW</th>
+      <th>V_OLD</th>
+      <th>W_NEW</th>
+      <th>W_OLD</th>
+      <th>X_NEW</th>
+      <th>X_OLD</th>
+      <th>Y_NEW</th>
+      <th>Y_OLD</th>
+      <th>Z_NEW</th>
+      <th>Z_OLD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.93215</td>
+      <td>0.93215</td>
+      <td>5</td>
+      <td>5</td>
+      <td>cat</td>
+      <td>cat</td>
+      <td>lkasd</td>
+      <td>1</td>
+      <td>asd</td>
+      <td>10</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>Cat</td>
+      <td>11</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>0.93215</td>
+      <td>0.93215</td>
+      <td>4</td>
+      <td>6</td>
+      <td>hat</td>
+      <td>potato</td>
+      <td>lkasd</td>
+      <td>cat</td>
+      <td>sd</td>
+      <td>10</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Cat</td>
+      <td>11</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4</td>
+      <td>1.00000</td>
+      <td>0.93215</td>
+      <td>5</td>
+      <td>5</td>
+      <td>nugget</td>
+      <td>chicken</td>
+      <td>lkasd</td>
+      <td>1</td>
+      <td>asd</td>
+      <td>10</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>5.0</td>
+      <td>4.0</td>
+      <td>Cat</td>
+      <td>11</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5</td>
+      <td>1.00000</td>
+      <td>0.93215</td>
+      <td>4</td>
+      <td>1</td>
+      <td>joy</td>
+      <td>chicken</td>
+      <td>lkasd</td>
+      <td>1</td>
+      <td>d</td>
+      <td>10</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Cat</td>
+      <td>11</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>8</td>
+      <td>0.93215</td>
+      <td>0.93215</td>
+      <td>1</td>
+      <td>1</td>
+      <td>chicken</td>
+      <td>chicken</td>
+      <td>lkasd</td>
+      <td>d</td>
+      <td>d</td>
+      <td>10</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>11</td>
+      <td>11</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+                            </div>
+                        
+                    </div>
+                </div>
+
+            </body>
+        </html>
+        

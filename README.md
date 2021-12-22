@@ -1,28 +1,17 @@
 <div id="top"></div>
 
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![GPL 3.0 License][license-shield]][license-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/gibbsbravo/DataDelta">
     <img src="images/DataDeltaLogo.png" alt="Logo" width="200" height="200">
   </a>
-
-<h3 align="center">DataDelta</h3>
-
-  <p align="center">
+  <p align="center" style="font-weight: bold; font-style:italic">
     The best Python package for comparing two dataframes
     <br />
     <a href="https://github.com/gibbsbravo/DataDelta"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/gibbsbravo/DataDelta/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/gibbsbravo/DataDelta/issues">Request Feature</a>
+    
   </p>
 </div>
 
@@ -32,23 +21,19 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#dependencies">Dependencies</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#usage-examples">Usage Examples</a></li>
     <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#example-html-report-output">Example HTML Report Output</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -58,7 +43,11 @@
 
 DataDelta is a very useful Python package for easily comparing two pandas dataframes for use in data analysis, data engineering, and tracking table changes across time.
 
-DataDelta generates a <a href="## Example HTML Report Output">report</a> as both a Python dict and HTML file that summarizes the key changes between two dataframes through completing a series of tests (that can also be selected individually). The Python report is intended for use as part of a DevOps / DataOps pipeline for testing to ensure table changes are expected.
+DataDelta generates a <a href="#example-html-report-output">report</a> as both a Python dict and HTML file that summarizes the key changes between two dataframes through completing a series of tests (that can also be selected individually). The Python report is intended for use as part of a DevOps / DataOps pipeline for testing to ensure table changes are expected.
+
+<a href="https://github.com/gibbsbravo/DataDelta/issues">Report Bug</a>
+·
+<a href="https://github.com/gibbsbravo/DataDelta/issues">Request Feature</a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -176,9 +165,7 @@ Don't forget to give the project a star! Thanks again!
 
 ## Example HTML Report Output
 
-![Report Screenshot1][report-screenshot1]
-![Report Screenshot2][report-screenshot2]
-![Report Screenshot3][report-screenshot3]
+![Report Screenshot][report-screenshot]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -214,6 +201,4 @@ Project Link: [https://github.com/gibbsbravo/DataDelta](https://github.com/gibbs
 [license-shield]: https://img.shields.io/github/license/gibbsbravo/DataDelta.svg?style=for-the-badge
 [license-url]: https://github.com/gibbsbravo/DataDelta/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[report-screenshot1]: images/DatasetComparisonReport1.png
-[report-screenshot2]: images/DatasetComparisonReport2.png
-[report-screenshot3]: images/DatasetComparisonReport3.png
+[report-screenshot]: images/DatasetComparisonReport.png

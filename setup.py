@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='datadelta',
-    version='0.0.1',
+    version='0.0.2',
     author="Andrew Gibbs-Bravo",
     author_email="andrewgbravo@gmail.com",
     description='The best Python package for comparing two dataframes',

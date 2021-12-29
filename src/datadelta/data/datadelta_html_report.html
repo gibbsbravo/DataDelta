@@ -153,7 +153,7 @@
                     }
 
                     .recordValueChangesContainer {
-                    margin: 10px 50px 0px 50px;
+                    margin: 10px 50px 50px 50px;
                     display: grid;
                     grid-template-columns: repeat(2, 1fr);
                     }
@@ -195,15 +195,20 @@
                 <h1 class="mainTitle">DataDelta: Dataset Comparison Report</h1>
                 <span class="descriptionText"> Summary comparison of changes between two tables </span>
                 
-                <span class="reportDate">22-December-2021 (11:04 AM)</span>
+                <span class="reportDate">29-December-2021 (04:18 PM)</span>
 
                 <div class='DataFrameSummaryContainer'>
                     <div id='oldDataFrameSummaryContainer'>
                         <h3 class="text-center sectionTitle">Old Dataframe Summary</h3>
                         <span class="center dataFrameText">Number of Records: 6 | 
                             Number of Columns: 26</span>
-                        <span class="center dataFrameText">Primary Key: A | 
-                            Primary Key Is Unique: True</span>
+                        <div class="center dataFrameText">
+                            <span>Primary Key: A</span>
+                            &nbsp; | &nbsp;
+                                
+                                <span>Primary Key Is Unique: True</span>
+                            
+                        </div>
                         <div class="summaryDataframeTable">
                             <table border="1" class="dataframe table table-striped table-bordered table-hover text-center">
   <thead>
@@ -407,8 +412,13 @@
                         <h3 class="text-center sectionTitle">New Dataframe Summary</h3>
                         <span class="center dataFrameText">Number of Records: 7 | 
                             Number of Columns: 26</span>
-                        <span class="center dataFrameText">Primary Key: A | 
-                            Primary Key Is Unique: True</span>
+                        <div class="center dataFrameText">
+                            <span>Primary Key: A</span>
+                            &nbsp; | &nbsp;
+                                
+                                <span>Primary Key Is Unique: True</span>
+                            
+                        </div>
                         <div class="summaryDataframeTable">
                             <table border="1" class="dataframe table table-striped table-bordered table-hover text-center">
   <thead>
@@ -617,12 +627,17 @@
                                 
                                     <li class="list-group-item">1 Unique column(s) in the old table</li>
                                 
+                                    <li class="list-group-item">1 Unique column(s) in the new table</li>
+                                
                             </ul>
                             <br>
 
                             
-                                <h4 class="text-center detailTitle"> Sample Removed Columns </h4>
+                                <h4 class="text-center detailTitle"> Top 50 Removed Columns </h4>
                                 <div class="alert alert-secondary contentFormat"> ['E'] </div>
+                            
+                                <h4 class="text-center detailTitle"> Top 50 Added Columns </h4>
+                                <div class="alert alert-secondary contentFormat"> ['HH'] </div>
                             
                         
                     </div>
@@ -646,10 +661,10 @@
                             <br>
 
                             
-                                <h4 class="text-center detailTitle"> Sample Removed Records </h4>
+                                <h4 class="text-center detailTitle"> Top 50 Removed Records </h4>
                                 <div class="alert alert-secondary contentFormat"> [2] </div>
                             
-                                <h4 class="text-center detailTitle"> Sample Added Records </h4>
+                                <h4 class="text-center detailTitle"> Top 50 Added Records </h4>
                                 <div class="alert alert-secondary contentFormat"> [6, 7] </div>
                             
                         
@@ -687,7 +702,7 @@
                             
 
                             
-                                <h4 class="text-center detailTitle"> Sample Changed Columns </h4>
+                                <h4 class="text-center detailTitle"> Top 50 Changed Columns </h4>
                                 <div class="alert alert-secondary"> ['I'] </div>
                             
                         
@@ -700,7 +715,7 @@
                         
                             <ul class="list-group contentFormat">
                                 
-                                    <li class="list-group-item">5 records have changed (100.0% of shared records)</li>
+                                    <li class="list-group-item">5 records have changed (100.0% of 5 shared records)</li>
                                 
                             </ul>
                             <br>
@@ -713,6 +728,7 @@
     <tr style="text-align: center;">
       <th></th>
       <th>column_names</th>
+      <th>n_changed_records</th>
       <th>changed_records_%</th>
     </tr>
   </thead>
@@ -720,31 +736,37 @@
     <tr>
       <th>0</th>
       <td>I</td>
+      <td>5</td>
       <td>100.0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>F</td>
+      <td>4</td>
       <td>80.0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>D</td>
+      <td>3</td>
       <td>60.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>B</td>
+      <td>2</td>
       <td>40.0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>C</td>
+      <td>2</td>
       <td>40.0</td>
     </tr>
     <tr>
       <th>5</th>
       <td>H</td>
+      <td>2</td>
       <td>40.0</td>
     </tr>
   </tbody>
@@ -753,10 +775,10 @@
                             
 
                             
-                                <h4 class="text-center detailTitle"> Sample Changed Records </h4>
+                                <h4 class="text-center detailTitle"> Top 50 Changed Records </h4>
                                 <div class="alert alert-secondary contentFormat"> [1, 3, 4, 5, 8] </div>
                             
-                                <h4 class="text-center detailTitle"> Sample Changed Columns </h4>
+                                <h4 class="text-center detailTitle"> Top 50 Changed Columns </h4>
                                 <div class="alert alert-secondary contentFormat"> ['I', 'F', 'D', 'B', 'C', 'H'] </div>
                             
                         

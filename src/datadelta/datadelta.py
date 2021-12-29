@@ -112,7 +112,7 @@ def check_column_names(old_df, new_df):
             report['column_name_changes']['values']['removed_columns'] = list(
                 columns_only_in_old)
 
-        elif len(columns_only_in_new) > 0:
+        if len(columns_only_in_new) > 0:
             report['column_name_changes']['summary'].append(
                 "{} Unique column(s) in the new table".format(len(columns_only_in_new)))
             report['column_name_changes']['values']['added_columns'] = list(
@@ -315,11 +315,14 @@ def check_chg_in_values(old_df, new_df, primary_key, column_subset=None):
         report['record_value_changes']['summary'] = []
         report['record_value_changes']['values'] = {}
 
-        prop_of_record_changes_by_col = (np.sum(shared_old_df_values != shared_new_df_values, axis=0) /
-                                         len(shared_new_df_values)).reset_index()
+        prop_of_record_changes_by_col = (
+            np.sum(shared_old_df_values != shared_new_df_values, axis=0)).reset_index()
 
         prop_of_record_changes_by_col.rename(columns={"index": "column_names",
-                                                      0: "changed_records_%"}, inplace=True)
+                                                      0: "n_changed_records"}, inplace=True)
+
+        prop_of_record_changes_by_col['changed_records_%'] = prop_of_record_changes_by_col["n_changed_records"] / \
+            len(shared_new_df_values)
 
         prop_of_record_changes_by_col.sort_values(
             ['changed_records_%', 'column_names'], ascending=[False, True], inplace=True)
@@ -329,11 +332,12 @@ def check_chg_in_values(old_df, new_df, primary_key, column_subset=None):
         prop_of_record_changes_by_col = prop_of_record_changes_by_col.loc[
             prop_of_record_changes_by_col['changed_records_%'] > 0]
 
-        prop_of_record_changes_by_col['changed_records_%'] = prop_of_record_changes_by_col['changed_records_%'] * 100
+        prop_of_record_changes_by_col['changed_records_%'] = np.around(
+            prop_of_record_changes_by_col['changed_records_%'] * 100, 1)
 
         report['record_value_changes']['summary'].append(
-            '{:,} records have changed ({:.1%} of shared records)'.format(
-                len(records_with_changes), len(records_with_changes) / len(shared_new_df_values)))
+            '{:,} records have changed ({:.1%} of {:,} shared records)'.format(
+                len(records_with_changes), len(records_with_changes) / len(shared_new_df_values), len(shared_new_df_values)))
         report['record_value_changes']['summary_table'] = prop_of_record_changes_by_col
         report['record_value_changes']['values']['changed_records'] = list(
             records_with_changes.values)
@@ -411,6 +415,14 @@ def create_consolidated_report(old_df, new_df, primary_key, column_subset=None):
         record_changes_comparison_df (pandas dataframe): Summary dataframe showing comparison between
             new and old columns for any records that are shared between dataframes with different values 
     """
+    assert isinstance(
+        old_df, pd.DataFrame), "Old dataframe input argument must be a pandas dataframe"
+    assert isinstance(
+        new_df, pd.DataFrame), "New dataframe input argument must be a pandas dataframe"
+    assert isinstance(
+        primary_key, str), "Primary key must be a string"
+    assert isinstance(column_subset, list) | (
+        column_subset is None), "Column subset must be a list or None"
 
     # Save copy of dataframes to avoid modifying the original dataframes
     old_df, new_df = old_df.copy(), new_df.copy()
@@ -430,6 +442,14 @@ def create_consolidated_report(old_df, new_df, primary_key, column_subset=None):
         old_df, primary_key, column_subset, 100)
     base_report['new_df_table_summary'] = get_df_summary(
         new_df, primary_key, column_subset, 100)
+
+    if not base_report['old_df_table_summary']['is_primary_key_unique']:
+        old_df.drop_duplicates(subset=primary_key, keep='first', inplace=True)
+        old_df.reset_index(inplace=True, drop=True)
+
+    if not base_report['new_df_table_summary']['is_primary_key_unique']:
+        new_df.drop_duplicates(subset=primary_key, keep='first', inplace=True)
+        new_df.reset_index(inplace=True, drop=True)
 
     column_names_report = check_column_names(old_df, new_df)
     record_count_report = check_record_count(old_df, new_df, primary_key)
@@ -470,12 +490,12 @@ def export_html_report(consolidated_report, record_changes_comparison_df,
     """
     max_detail_values = 50
 
-    header_lookup_table = {"added_columns": "Sample Added Columns",
-                           "removed_columns": "Sample Removed Columns",
-                           "changed_columns": "Sample Changed Columns",
-                           "added_records": "Sample Added Records",
-                           "removed_records": "Sample Removed Records",
-                           "changed_records": "Sample Changed Records"}
+    header_lookup_table = {"added_columns": "Top {} Added Columns".format(max_detail_values),
+                           "removed_columns": "Top {} Removed Columns".format(max_detail_values),
+                           "changed_columns": "Top {} Changed Columns".format(max_detail_values),
+                           "added_records": "Top {} Added Records".format(max_detail_values),
+                           "removed_records": "Top {} Removed Records".format(max_detail_values),
+                           "changed_records": "Top {} Changed Records".format(max_detail_values)}
 
     html_template = Template('''
         <html>
@@ -632,7 +652,7 @@ def export_html_report(consolidated_report, record_changes_comparison_df,
                     }
 
                     .recordValueChangesContainer {
-                    margin: 10px 50px 0px 50px;
+                    margin: 10px 50px 50px 50px;
                     display: grid;
                     grid-template-columns: repeat(2, 1fr);
                     }
@@ -683,8 +703,15 @@ def export_html_report(consolidated_report, record_changes_comparison_df,
                         <h3 class="text-center sectionTitle">Old Dataframe Summary</h3>
                         <span class="center dataFrameText">Number of Records: {{consolidated_report['old_df_table_summary']['number_of_records']}} | 
                             Number of Columns: {{consolidated_report['old_df_table_summary']['number_of_columns']}}</span>
-                        <span class="center dataFrameText">Primary Key: {{consolidated_report['old_df_table_summary']['primary_key']}} | 
-                            Primary Key Is Unique: {{consolidated_report['old_df_table_summary']['is_primary_key_unique']}}</span>
+                        <div class="center dataFrameText">
+                            <span>Primary Key: {{consolidated_report['old_df_table_summary']['primary_key']}}</span>
+                            &nbsp; | &nbsp;
+                            {% if not consolidated_report['old_df_table_summary']['is_primary_key_unique'] %}
+                                <span style="color:red; font-weight: bold;">Primary Key Is Unique: {{consolidated_report['old_df_table_summary']['is_primary_key_unique']}}</span>
+                            {% else %}    
+                                <span>Primary Key Is Unique: {{consolidated_report['old_df_table_summary']['is_primary_key_unique']}}</span>
+                            {% endif %}
+                        </div>
                         <div class="summaryDataframeTable">
                             {{consolidated_report['old_df_table_summary']['summary_table'].to_html(
                                 classes="table table-striped table-bordered table-hover text-center")}}
@@ -695,8 +722,15 @@ def export_html_report(consolidated_report, record_changes_comparison_df,
                         <h3 class="text-center sectionTitle">New Dataframe Summary</h3>
                         <span class="center dataFrameText">Number of Records: {{consolidated_report['new_df_table_summary']['number_of_records']}} | 
                             Number of Columns: {{consolidated_report['new_df_table_summary']['number_of_columns']}}</span>
-                        <span class="center dataFrameText">Primary Key: {{consolidated_report['new_df_table_summary']['primary_key']}} | 
-                            Primary Key Is Unique: {{consolidated_report['new_df_table_summary']['is_primary_key_unique']}}</span>
+                        <div class="center dataFrameText">
+                            <span>Primary Key: {{consolidated_report['new_df_table_summary']['primary_key']}}</span>
+                            &nbsp; | &nbsp;
+                            {% if not consolidated_report['new_df_table_summary']['is_primary_key_unique'] %}
+                                <span style="color:red; font-weight: bold;">Primary Key Is Unique: {{consolidated_report['new_df_table_summary']['is_primary_key_unique']}}</span>
+                            {% else %}    
+                                <span>Primary Key Is Unique: {{consolidated_report['new_df_table_summary']['is_primary_key_unique']}}</span>
+                            {% endif %}
+                        </div>
                         <div class="summaryDataframeTable">
                             {{consolidated_report['new_df_table_summary']['summary_table'].to_html(
                                 classes="table table-striped table-bordered table-hover text-center")}}
@@ -894,14 +928,15 @@ def load_pickle(import_file_name):
 def get_example_report():
     old_df = pd.read_csv('data/MainTestData_old_df.csv')
     new_df = pd.read_csv('data/MainTestData_new_df.csv')
+
     primary_key = 'A'
     column_subset = None
     consolidated_report, record_changes_comparison_df = create_consolidated_report(
         old_df, new_df, primary_key, column_subset)
-    save_pickle(consolidated_report, 'data/correct_consolidated_report.pickle',
-                overwrite_existing_file=True)
     export_html_report(consolidated_report, record_changes_comparison_df,
                        export_file_name='data/datadelta_html_report.html',
                        overwrite_existing_file=True)
+    save_pickle(consolidated_report, 'data/correct_consolidated_report.pickle',
+                overwrite_existing_file=True)
 
 # %%
